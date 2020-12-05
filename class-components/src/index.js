@@ -14,20 +14,36 @@ import ReactDOM from "react-dom";
 class App extends React.Component {
     constructor(props){
       super(props);
-      this.state = { lat: null };
+      this.state = { lat: null, errorMessage: "" };
       window.navigator.geolocation.getCurrentPosition(position=>{
         //always use setState to set the state 
         //direct assignment like this.state.lat = position.coords.latitude
         //is not recommended
         this.setState({lat: position.coords.latitude})
-      }, err=>console.log(err));
+      }, err=>{
+        this.setState({errorMessage: err.message});
+      });
     }
   //React says we to define a render!! 
   //React will get angry that why there is no returning JSX in render
     render(){
         //render function is automatically called several times so any api references should be
         //declated explicitly
-    return   <div>Latitude: {this.state.lat}</div>;
+        if(!this.state.lat && this.state.errorMessage){
+          return  (
+            <div>
+              Error: {this.state.errorMessage}
+            </div>
+          ) 
+        }
+        if(this.state.lat && !this.state.errorMessage){
+          return  (
+            <div>
+              Latitude: {this.state.lat} <br />
+            </div>
+          ) 
+        }
+        return  <div>Loading!!</div>;
 
     }
 } 
