@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import SeasonDisplay from './SeasonDisplay';
+import "semantic-ui-css/semantic.min.css";
 
 /* const App = () => {
   window.navigator.geolocation.getCurrentPosition(
