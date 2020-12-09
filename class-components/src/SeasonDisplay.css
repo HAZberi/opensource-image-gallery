@@ -8,6 +8,7 @@
     position: absolute;
     bottom: 5%;
     right: 3%;
+    color: blue
 }
 
 .season-display{
@@ -22,5 +23,13 @@
 }
 
 .summer{
-    background-color: orangered;
+    background-color: orange;
+}
+
+.season-display.winter i{
+    color: lightblue;
+}
+
+.season-display.summer i{
+    color: orangered;
 }
