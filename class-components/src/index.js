@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import SeasonDisplay from './SeasonDisplay';
+import Loading from './Loading'
 import "semantic-ui-css/semantic.min.css";
 
 /* const App = () => {
@@ -56,7 +57,7 @@ class App extends React.Component {
         
       );
     }
-    return <div>Loading!!</div>;
+    return <Loading />;
   }
 }
 
