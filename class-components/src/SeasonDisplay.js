@@ -13,11 +13,12 @@ const options = {
 
 const SeasonDisplay = (props) => {
   const season = getSeason(props.lat, new Date().getMonth());
+  const {text, icon} = options[season];
   return (
     <div className={`season-display ${season}`}>
-      <i className={`massive ${options[season].icon} icon icon-left`}></i>
-      <h1>{options[season].text}</h1>
-      <i className={`massive ${options[season].icon} icon icon-right`}></i>
+      <i className={`massive ${icon} icon icon-left`}></i>
+      <h1>{text}</h1>
+      <i className={`massive ${icon} icon icon-right`}></i>
     </div>
   );
 };
