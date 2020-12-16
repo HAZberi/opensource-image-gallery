@@ -26,7 +26,7 @@ class SearchBar extends React.Component {
       <div className="ui segment" style={{ marginTop: "5rem" }}>
         <form className="ui form" onSubmit={this.onFormSubmit}>
           <div className="field">
-            <label>Image Search</label>
+            <label></label>
 {/*             this how we handle events in react
             generally there are two types of handling events
             controlled vs uncontrolled
@@ -36,6 +36,7 @@ class SearchBar extends React.Component {
               type="text"
               onChange={(e) => this.setState({ term: e.target.value })}
               value={this.state.term}
+              placeholder='Start Typing . . . .'
             />
           </div>
         </form>
