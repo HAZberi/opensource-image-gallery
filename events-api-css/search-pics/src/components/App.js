@@ -27,23 +27,22 @@ class App extends React.Component {
   //     }
   // }
 
-  async albertaApi() {
-    try {
-      const getSearchResults = await fetch(
-        'https://api.covid19api.com/country/south-africa/status/confirmed'
-      );
-      const searchResults = await getSearchResults.json();
-/*       const filtered = searchResults.data.filter(element => {
-        return element.name === "Canada";
-      }); */
-      console.log(searchResults);
-    } catch (err) {
-      console.log(err);
-    }
-  }
+//   async albertaApi() {
+//     try {
+//       const getSearchResults = await fetch(
+//         'https://api.covid19api.com/country/canada'
+//       );
+//       const searchResults = await getSearchResults.json();
+// /*       const filtered = searchResults.data.filter(element => {
+//         return element.name === "Canada";
+//       }); */
+//       console.log(searchResults);
+//     } catch (err) {
+//       console.log(err);
+//     }
+//   }
 
   render() {
-    this.albertaApi();
     return (
       <div className="ui container">
         <SearchBar onSubmit={this.onSearchSubmit} />
