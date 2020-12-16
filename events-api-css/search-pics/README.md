@@ -1,4 +1,4 @@
-#Checkout the live version of this app @ https://search10randomimages.netlify.app/
+# Checkout the live version of this app @ https://search10randomimages.netlify.app/
 
 # Getting Started with Create React App
 
