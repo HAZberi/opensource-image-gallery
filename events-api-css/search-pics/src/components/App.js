@@ -1,6 +1,7 @@
 import React from "react";
 import unsplash from "../api/unsplash";
-import pexels from "../api/pexels"
+import pexels from "../api/pexels";
+import Layout from "./Layout";
 import SearchBar from "./SearchBar";
 import ImageList from "./ImageList";
 
@@ -8,13 +9,17 @@ class App extends React.Component {
   state = { images: [] };
   onSearchSubmit = async (term) => {
     const unsplashResponse = await unsplash.get("/search/photos", {
-      params: { query: term },
+      params: { query: term, per_page: 20 },
     });
     const pexelsResponse = await pexels.get("/search", {
-      params: { query: term, per_page: 10 },
+      params: { query: term, per_page: 20 },
     });
-    console.log(pexelsResponse.data.photos);
-    this.setState({ images: unsplashResponse.data.results });
+    const allResults = [
+      ...pexelsResponse.data.photos,
+      ...unsplashResponse.data.results,
+    ];
+    console.log(allResults);
+    this.setState({ images: allResults });
   };
   //API fetch without using axios
   // async onSearchSubmit(term){
@@ -32,29 +37,36 @@ class App extends React.Component {
   //     }
   // }
 
-//   async albertaApi() {
-//     try {
-//       const getSearchResults = await fetch(
-//         'https://api.covid19api.com/country/canada'
-//       );
-//       const searchResults = await getSearchResults.json();
-// /*       const filtered = searchResults.data.filter(element => {
-//         return element.name === "Canada";
-//       }); */
-//       console.log(searchResults);
-//     } catch (err) {
-//       console.log(err);
-//     }
-//   }
+  //   async albertaApi() {
+  //     try {
+  //       const getSearchResults = await fetch(
+  //         'https://api.covid19api.com/country/canada'
+  //       );
+  //       const searchResults = await getSearchResults.json();
+  // /*       const filtered = searchResults.data.filter(element => {
+  //         return element.name === "Canada";
+  //       }); */
+  //       console.log(searchResults);
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   }
 
   render() {
     return (
-      <div className="ui container">
-        <div className="ui large header center aligned" style={{marginTop: `2em`}}>High Quality Image Search</div>
-        <SearchBar onSubmit={this.onSearchSubmit} />
-        {/* Found: {this.state.images.length} images */}
-        <ImageList images={this.state.images} />
-      </div>
+      <Layout>
+        <div className="ui container">
+          <div
+            className="ui large header center aligned"
+            style={{ marginTop: `2em` }}
+          >
+            High Quality Image Search
+          </div>
+          <SearchBar onSubmit={this.onSearchSubmit} />
+          {/* Found: {this.state.images.length} images */}
+          <ImageList images={this.state.images} />
+        </div>
+      </Layout>
     );
   }
 }
