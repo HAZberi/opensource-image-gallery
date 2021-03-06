@@ -1,15 +1,20 @@
 import React from "react";
 import unsplash from "../api/unsplash";
+import pexels from "../api/pexels"
 import SearchBar from "./SearchBar";
 import ImageList from "./ImageList";
 
 class App extends React.Component {
   state = { images: [] };
   onSearchSubmit = async (term) => {
-    const response = await unsplash.get("/search/photos", {
+    const unsplashResponse = await unsplash.get("/search/photos", {
       params: { query: term },
     });
-    this.setState({ images: response.data.results });
+    const pexelsResponse = await pexels.get("/search", {
+      params: { query: term, per_page: 10 },
+    });
+    console.log(pexelsResponse.data.photos);
+    this.setState({ images: unsplashResponse.data.results });
   };
   //API fetch without using axios
   // async onSearchSubmit(term){
