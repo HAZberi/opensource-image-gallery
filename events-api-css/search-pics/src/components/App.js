@@ -18,7 +18,6 @@ class App extends React.Component {
       ...pexelsResponse.data.photos,
       ...unsplashResponse.data.results,
     ];
-    console.log(allResults);
     this.setState({ images: allResults });
   };
   //API fetch without using axios
