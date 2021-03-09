@@ -6,51 +6,49 @@ import SearchBar from "./SearchBar";
 import ImageList from "./ImageList";
 
 class App extends React.Component {
-  state = { images: [] };
+  state = { images: [], loading: false, notFound: false };
   onSearchSubmit = async (term) => {
-    const unsplashResponse = await unsplash.get("/search/photos", {
-      params: { query: term, per_page: 20 },
-    });
-    const pexelsResponse = await pexels.get("/search", {
-      params: { query: term, per_page: 20 },
-    });
-    const allResults = [
-      ...pexelsResponse.data.photos,
-      ...unsplashResponse.data.results,
-    ];
-    this.setState({ images: allResults });
+    this.setState({ loading: true, notFound: false });
+    let allResults = [];
+    try {
+      const unsplashResponse = await unsplash.get("/search/photos", {
+        params: { query: term, per_page: 20 },
+      });
+      const pexelsResponse = await pexels.get("/search", {
+        params: { query: term, per_page: 20 },
+      });
+      allResults = [
+        ...pexelsResponse.data.photos,
+        ...unsplashResponse.data.results,
+      ];
+    } catch (err) {
+      console.error(err);
+    }
+    if (allResults.length >= 1) {
+      this.setState({ images: allResults, loading: false });
+    } else {
+      setTimeout(() => {
+        this.setState({ loading: false, notFound: true });
+      }, 1000);
+    }
   };
-  //API fetch without using axios
-  // async onSearchSubmit(term){
-  //     try{
-  //         const getSearchResults = await fetch(`https://api.unsplash.com/search/photos?query=${term}`, {
-  //             method: "GET",
-  //             headers: {
-  //                 Authorization: 'Client-ID g8dQej2zQ2DYDQpqQqhmOK4LOeM0V9HeRsvCiUdfR8g'
-  //             }
-  //         });
-  //         const searchResults = await getSearchResults.json();
-  //         console.log(searchResults);
-  //     }catch(err){
-  //         console.log(err);
-  //     }
-  // }
+  notFoundJSX = () => (
+    <div className="ui placeholder segment" style={{ height: "50vh" }}>
+      <div className="ui large header" style={{ margin: "auto" }}>
+        No Images Found! Try something else.
+      </div>
+    </div>
+  );
 
-  //   async albertaApi() {
-  //     try {
-  //       const getSearchResults = await fetch(
-  //         'https://api.covid19api.com/country/canada'
-  //       );
-  //       const searchResults = await getSearchResults.json();
-  // /*       const filtered = searchResults.data.filter(element => {
-  //         return element.name === "Canada";
-  //       }); */
-  //       console.log(searchResults);
-  //     } catch (err) {
-  //       console.log(err);
-  //     }
-  //   }
-
+  loadingJSX = () => (
+    <>
+      <div className="ui segment" style={{ height: "50vh" }}>
+        <div className="ui active inverted dimmer">
+          <div className="ui massive text loader">Fectching Content...</div>
+        </div>
+      </div>
+    </>
+  );
   render() {
     return (
       <Layout>
@@ -62,8 +60,13 @@ class App extends React.Component {
             High Quality Image Search
           </div>
           <SearchBar onSubmit={this.onSearchSubmit} />
-          {/* Found: {this.state.images.length} images */}
-          <ImageList images={this.state.images} />
+          {this.state.loading ? (
+            this.loadingJSX()
+          ) : this.state.notFound ? (
+            this.notFoundJSX()
+          ) : (
+            <ImageList images={this.state.images} />
+          )}
         </div>
       </Layout>
     );
