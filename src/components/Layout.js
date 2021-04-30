@@ -17,7 +17,7 @@ const Layout = (props) => {
         <h4>
           Powered by{" "}
           <a href="https://unsplash.com/" target="_blank" rel="noreferrer">
-            Usplash
+            Unsplash
           </a>{" "}
           and{" "}
           <a href="https://www.pexels.com/" target="_blank" rel="noreferrer">
