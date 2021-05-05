@@ -14,16 +14,25 @@ class App extends React.Component {
       const unsplashResponse = await unsplash.get("/search/photos", {
         params: { query: term, per_page: 20 },
       });
-      const pexelsResponse = await pexels.get("/search", {
-        params: { query: term, per_page: 20 },
-      });
-      allResults = [
-        ...pexelsResponse.data.photos,
-        ...unsplashResponse.data.results,
-      ];
+      allResults = [allResults, ...unsplashResponse.data.results];
     } catch (err) {
       console.error(err);
     }
+    try {
+      const pexelsResponse = await pexels.get("/search", {
+        params: { query: term, per_page: 20 },
+      });
+      allResults = [allResults, ...pexelsResponse.data.photos];
+    } catch (err) {
+      console.error(err);
+    }
+
+    //Problem: inconsistent pexels-api returning empty objects
+    //Action: filtering out empty objects
+    allResults = allResults.filter(
+      (result) => Object.keys(result).length !== 0
+    );
+
     if (allResults.length >= 1) {
       this.setState({ images: allResults, loading: false });
     } else {
