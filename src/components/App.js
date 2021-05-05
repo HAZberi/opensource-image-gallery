@@ -12,7 +12,7 @@ class App extends React.Component {
     let allResults = [];
     try {
       const unsplashResponse = await unsplash.get("/search/photos", {
-        params: { query: term, per_page: 20 },
+        params: { query: term, per_page: 40 },
       });
       allResults = [allResults, ...unsplashResponse.data.results];
     } catch (err) {
