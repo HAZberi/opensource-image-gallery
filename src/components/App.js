@@ -12,17 +12,17 @@ class App extends React.Component {
     let allResults = [];
     try {
       const unsplashResponse = await unsplash.get("/search/photos", {
-        params: { query: term, per_page: 40 },
+        params: { query: term, per_page: 25 },
       });
-      allResults = [allResults, ...unsplashResponse.data.results];
+      allResults = [...allResults, ...unsplashResponse.data.results];
     } catch (err) {
       console.error(err);
     }
     try {
       const pexelsResponse = await pexels.get("/search", {
-        params: { query: term, per_page: 20 },
+        params: { query: term, per_page: 25 },
       });
-      allResults = [allResults, ...pexelsResponse.data.photos];
+      allResults = [...allResults, ...pexelsResponse.data.photos];
     } catch (err) {
       console.error(err);
     }
