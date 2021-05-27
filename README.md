@@ -17,6 +17,12 @@ Finding quality images is a pain for small projects, design prototypes or studen
 
 In the project directory, you can run:
 
+To install all the project dependencies:
+
+### `npm install`
+
+To start the development server:
+
 ### `npm start`
 
 Runs the app in the development mode.\
